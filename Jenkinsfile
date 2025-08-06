@@ -31,7 +31,7 @@ pipeline {
         agent any
         steps {
             script {
-                sh ''' curl http://http://ec2-54-224-60-70.compute-1.amazonaws.com | grep -q "Hello world!"
+                sh ''' curl http://ec2-54-224-60-70.compute-1.amazonaws.com | grep -q "Hello world!"
                 '''
             }
         }
