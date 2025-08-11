@@ -1,10 +1,10 @@
 pipeline {
     agent none
     environment {
-        DOCKERHUB_AUTH = credentials('danipro237')
+        DOCKERHUB_AUTH = credentials('docker_hub_login')
         ID_DOCKER = "${DOCKERHUB_AUTH_USR}"
         PORT_EXPOSED = "80"
-        IMAGE_NAME = "alpinebootcamp26"
+        IMAGE_NAME = "alpinehelloworld"
         IMAGE_TAG = "v1.1"
     }
     stages {
@@ -55,10 +55,10 @@ pipeline {
       stage('Deploy in staging'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_STAGING = "54.227.172.12"
+                HOSTNAME_DEPLOY_STAGING = "52.91.236.7"
             }
           steps {
-            sshagent(credentials: ['SSH_AUTH_SERVER']) {
+            sshagent(credentials: ['ssk_key']) {
                 sh '''
                     [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
                     ssh-keyscan -t rsa,dsa ${HOSTNAME_DEPLOY_STAGING} >> ~/.ssh/known_hosts
@@ -79,10 +79,10 @@ pipeline {
       stage('Deploy in prod'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_PROD = "54.175.31.22"
+                HOSTNAME_DEPLOY_PROD = "54.198.126.185"
             }
           steps {
-            sshagent(credentials: ['SSH_AUTH_SERVER']) {
+            sshagent(credentials: ['ssk_key']) {
                 sh '''
                     [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
                     ssh-keyscan -t rsa,dsa ${HOSTNAME_DEPLOY_PROD} >> ~/.ssh/known_hosts
